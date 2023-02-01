@@ -4,49 +4,46 @@ import json
 from Fail import get_all
 from Fail import get_password
 from Fail import get_score
+
 attempts = 2
 used_answers = []
 number_question = 0
 score = 0
 random_answer = []
-fail=[{}]
-fail1=get_all()
-fail2=get_password()
-fail3=get_score()
-vxod=input("Выберите вход(если вы уже играли в викторину) или регистрация(если вы тут впервые)>>>")
+fail = [{}] # непонятная, пока никому не нужная хрень
+fail1 = get_all()  # имена прошлых игроков
+fail2 = get_password()  # пароли прошлых игроков
+fail3 = get_score()  # лучшие результаты прошлых игроков
+user_choice = input("Выберите вход(если вы уже играли в викторину) или регистрация(если вы тут впервые)>>>")
 name = input("Напишите ваше имя>>>")
-if vxod=="вход":
+if user_choice == "вход":
     if name in fail1:
-        password=input("Введите пароль>>>")
+        password = input("Введите пароль>>>")
         print(fail2)
         if int(password) in fail2:
             print("Ты попал на викторину.")
-            print("Твоя задача-побить рекорд прошлых игроков или хотя бы досчить того же уровня,как и они,иначе ты проиграешь.")
+            print(
+                "Твоя задача-побить рекорд прошлых игроков или хотя бы досчить того же уровня,как и они,иначе ты проиграешь.")
         else:
             while int(password) not in fail2:
-                password=input("Неправильный пароль.Попробуйте еще раз")
+                password = input("Неправильный пароль.Попробуйте еще раз")
     else:
         while name not in fail1:
-            name=input("Неправильный логин.Попробуйте еще раз.")
-if vxod=="регистрация":
+            name = input("Неправильный логин.Попробуйте еще раз.")
+if user_choice == "регистрация":
     if name in fail1:
         while name in fail1:
-            name=input("Такое имя уже используется,выберите другое.")
+            name = input("Такое имя уже используется,выберите другое.")
     else:
-        password=input("Придумайте пароль>>>")
+        password = input("Придумайте пароль>>>")
         while int(password) in fail2:
-            password=input("Такой пароль уже используется.Выберите другой.")
-        password1=input("Повторите пароль>>>")
-        while password1!=password:
-            password1=input("Неправильно.Попробуйте еще раз.")
+            password = input("Такой пароль уже используется.Выберите другой.")
+        password1 = input("Повторите пароль>>>")
+        while password1 != password:
+            password1 = input("Неправильно.Попробуйте еще раз.")
         print("Ты попал на викторину.")
-        print("Твоя задача-побить рекорд прошлых игроков или хотя бы досчить того же уровня,как и они,иначе ты проиграешь.")
-
-
-
-
-
-
+        print(
+            "Твоя задача-побить рекорд прошлых игроков или хотя бы досчить того же уровня,как и они,иначе ты проиграешь.")
 
 
 def get_questions(level_question: int):
@@ -91,9 +88,8 @@ for count_round in range(1, 4):
         score, text_output = user_answer_check(user_answ=user_answer, question_data=question, score_user=score)
         print(text_output)
 
-
 print("Ваш счет:", score)
 random_answer = []
-fail.append({"name": name, "best_result": score,"password": password})
+fail.append({"name": name, "best_result": score, "password": password})
 with open('fail.json', 'w', encoding='utf-8') as file:
     json.dump(fail, file, indent=4)
