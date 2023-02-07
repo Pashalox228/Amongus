@@ -4,13 +4,14 @@ import json
 from Fail import get_all
 from Fail import get_password
 from Fail import get_score
-
+with open('users.json', 'r', encoding='utf-8') as users_data:
+    fail=json.load(users_data)
 attempts = 2
 used_answers = []
 number_question = 0
 score = 0
 random_answer = []
-fail = [] # непонятная, пока никому не нужная хрень
+print(fail)
 names_of_players = get_all()  # имена прошлых игроков
 passwords_of_players = get_password()  # пароли прошлых игроков
 best_score_of_players = get_score()  # лучшие результаты прошлых игроков
@@ -108,6 +109,6 @@ for count_round in range(1, 4):
 
 print("Ваш счет:", score)
 random_answer = []
-fail.append({"name": name, "best_result": score, "password": password})
+fail.append({"name": name, "best_result": score, "password": int(password)})
 with open('users.json', 'w', encoding='utf-8') as file:
     json.dump(fail, file, indent=4)
