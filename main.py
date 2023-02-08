@@ -64,6 +64,7 @@ if user_choice == "регистрация":
         print(
             "Твоя задача-побить рекорд прошлых игроков или хотя бы досчить того же уровня,как и они,иначе ты проиграешь.")
 
+print("Рекорд:",max(best_score_of_players))
 
 def get_questions(level_question: int):
     questions_list = []
@@ -109,6 +110,15 @@ for count_round in range(1, 4):
 
 print("Ваш счет:", score)
 random_answer = []
-fail.append({"name": name, "best_result": score, "password": int(password)})
-with open('users.json', 'w', encoding='utf-8') as file:
-    json.dump(fail, file, indent=4)
+if user_choice=="регистрация":
+   fail.append({"name": name, "best_result": score, "password": int(password)})
+   with open('users.json', 'w', encoding='utf-8') as file:
+       json.dump(fail, file, indent=4)
+if user_choice=="вход":
+    if score>=best_score_of_players[names_of_players.index(name)]:
+        fail[names_of_players.index(name)]["best_result"]=score
+        with open('users.json', 'w', encoding='utf-8') as file:
+            json.dump(fail, file, indent=4)
+
+
+
